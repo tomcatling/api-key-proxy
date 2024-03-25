@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+ 
+<style>
+    body {
+        width: fit-content;
+        margin: 50px auto;
+    }
+ 
+    form {
+        float: right;
+    }
+</style>
+ 
+<p class=" container">Are you sure you want to delete " {{item}}"?</p>
+ 
+<div>
+    <a href="{% url 'list' %}" class="ui secondary basic button">Cancel</a>
+ 
+    <form method="POST" action="">
+        {% csrf_token %}
+ 
+        <input type="submit" name="Confirm" class="ui negative basic button" />
+    </form>
+</div>

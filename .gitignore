@@ -1,0 +1,12 @@
+**/*.pem
+**/*.cer
+**/*.p12
+*.pem
+*.cer
+*.p12
+.env
+.venv
+**/*.sqlite3
+__pycache__
+**/__pycache__
+postgres-data

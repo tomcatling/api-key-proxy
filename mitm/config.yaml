@@ -1,0 +1,12 @@
+---
+dump_destination:  /home/mitmproxy/logfile.json
+dump_encodecontent: true
+stream_large_bodies: 10m
+block_global: true
+block_list: [] # https://docs.mitmproxy.org/stable/overview-features/#blocklist
+modify_headers: # https://docs.mitmproxy.org/stable/overview-features/#modify-headers
+  - /~d ^api\.openai\.com$/Authorization/Bearer test-key
+allow_hosts:
+  - ^api\.openai\.com:443$
+scripts:
+  - /usr/local/bin/jsondump.py

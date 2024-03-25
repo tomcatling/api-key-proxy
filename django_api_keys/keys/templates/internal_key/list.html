@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+
+<style>
+    body {
+        margin: 20px;
+        font-size: 0.9em; /* Consistent font size */
+    }
+    table {
+        width: 100%;
+        max-width: 1200px; /* Adjust based on your preference */
+        table-layout: fixed; /* Enable fixed table layout for uniform column widths */
+        border-collapse: collapse; /* Remove space between borders */
+    }
+    th, td {
+        text-align: left; /* Align text to the left */
+        padding: 8px; /* Adjust padding for readability */
+        border-bottom: 1px solid #ddd; /* Add a bottom border to each cell */
+        overflow: hidden; /* Hide overflow text */
+        text-overflow: ellipsis; /* Add ellipsis for overflow text */
+        white-space: nowrap; /* Prevent text wrapping */
+    }
+    tr:hover {background-color: #f5f5f5;} /* Add hover effect */
+    .form-row {
+        display: flex; /* Align form elements in a row */
+        align-items: center; /* Align items vertically */
+    }
+    .form-field-wrapper {
+        flex: 1; /* Allow form input to fill space */
+    }
+    .action-button {
+        cursor: pointer;
+        background-color: transparent !important; /* Remove button background */
+        border: none; /* Remove border */
+        padding: 6.5 !important; /* Minimal padding */
+    }
+    /* Set maximum widths for table columns */
+    th:nth-child(1), td:nth-child(1) { width: 30%; } /* Name */
+    th:nth-child(2), td:nth-child(2) { width: 20%; } /* Last Accessed */
+    th:nth-child(3), td:nth-child(3) { width: 20%; } /* Created */
+    th:nth-child(4), td:nth-child(4) { width: 20%; } /* Key Material */
+    th:nth-child(5), td:nth-child(5) { width: 5%; } /* Action */
+</style>
+
+<div style="margin-left: 20px;"> <!-- Adjust for left alignment -->
+    <h3>{{user.username}}'s Keys</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Last Accessed</th>
+                <th>Created</th>
+                <th>Key Material</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for internal_key in internal_keys %}
+            <tr>
+                <td>{{internal_key.name}}</td>
+                <td>{{internal_key.last_used|default:"--"}}</td>
+                <td>{{internal_key.created}}</td>
+                <td>{{internal_key.material}}</td> <!-- Directly display internal_key material -->
+                <td>
+                    <!-- Monochrome X Icon Button for Delete -->
+                    <a href="{% url 'delete' internal_key.id %}" class="ui icon button action-button"><i class="times icon"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+            <!-- Form to create a new internal_key, designed as another row -->
+            <tr class="form-row">
+                <form method="POST" action="/" class="ui form" style="width: 100%;">
+                    {% csrf_token %}
+                    <td colspan="4" class="form-field-wrapper">
+                        {{ form }}
+                    </td>
+                    <td>
+                        <!-- Monochrome Plus Icon Button -->
+                        <button type="submit" name="Create Key" class="ui icon button action-button"><i class="plus icon"></i></button>
+                    </td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+</div>
